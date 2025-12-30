@@ -1,0 +1,344 @@
+body {
+    background-image: url("./backgrondProducts.jpg");
+    background-size:auto;
+    background-position: center;
+    background-repeat: no-repeat;
+
+}
+
+.container {
+    max-width: 70%;
+    margin: auto;
+}
+
+table {
+    border: 2px solid rgb(249, 244, 244);
+    border-collapse: collapse;
+    background-color: rgb(236, 186, 213);
+    width: 70%;
+    margin: auto;
+    height: auto;
+
+
+}
+
+th,
+td {
+    border: 2px solid rgb(249, 244, 244);
+    padding: 10px;
+
+}
+
+th {
+    color: white;
+    border: 2px solid rgb(249, 244, 244);
+    font-size: 20px;
+    text-align: center;
+    background-color: rgb(104, 131, 202);
+}
+
+tr:hover {
+    background-color: rgba(95, 39, 205, 0.3);
+    cursor: pointer;
+}
+
+
+
+#add {
+    background-color: rgb(104, 131, 202);
+    color: white;
+    border: 1px solid #f1f2f1;
+    border-radius: 8px;
+    padding: 8px 11px;
+    font-size: 14px;
+    height: auto;
+}
+
+#add:hover {
+    background-color: rgb(20, 60, 180);
+    box-shadow: 0 4px 10px #f1f2f1;
+
+}
+
+#delete {
+    background-color: rgb(227, 123, 123);
+    color: white;
+    border: 1px solid #f1f2f1;
+    box-shadow: 0 4px 10px #f1f2f1;
+}
+
+#delete:hover {
+    background-color: rgb(232, 53, 53);
+    box-shadow: 0 4px 10px rgba(101, 97, 97, 0.3);
+}
+
+#view {
+    background-color: rgb(12, 178, 219);
+    color: white;
+    border: 1px solid #f1f2f1;
+    box-shadow: 0 4px 10px #f1f2f1;
+}
+
+#view:hover {
+    background-color: rgb(4, 120, 149);
+    box-shadow: 0 4px 10px rgba(101, 97, 97, 0.3);
+}
+
+#edit {
+    background-color: rgb(109, 219, 151);
+    color: white;
+    border: 1px solid #f1f2f1;
+    box-shadow: 0 4px 10px #f1f2f1;
+}
+
+#edit:hover {
+    background-color: rgb(7, 231, 93);
+    box-shadow: 0 4px 10px rgba(101, 97, 97, 0.3);
+}
+
+#detailName {
+    margin: 5%;
+    color: rgb(130, 35, 35)
+}
+
+#detailPrice {
+    margin: 5%;
+    color: rgb(130, 35, 35)
+}
+
+/* Style for all input fields */
+input[type="text"],
+input[type="number"] {
+
+    padding: 8px 11px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.3s;
+    margin-left: 0;
+    display: inline;
+    overflow-x: auto;
+}
+
+
+
+
+/* Hover effect */
+input[type="text"]:hover,
+input[type="number"]:hover {
+    border-color: #530ede;
+    box-shadow: 0 0 5px rgba(95, 39, 205, 0.2);
+}
+
+/* Focus effect (when clicked inside) */
+input[type="text"]:focus,
+input[type="number"]:focus {
+    border-color: #5f27cd;
+    box-shadow: 0 0 8px rgba(95, 39, 205, 0.5);
+    /* stronger glow */
+}
+
+/* Placeholder styling */
+input::placeholder {
+    color: #888;
+    font-style: italic;
+}
+
+.EditModal {
+    margin: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-body input[type="text"],
+.modal-body input[type="number"] {
+    margin: 5%;
+}
+
+#btn-primary {
+    background-color: rgb(22, 87, 134);
+    color: white;
+    margin: 2%;
+    box-shadow: 0 0 4px rgba(183, 255, 254, 0.4);
+}
+
+#btn-danger {
+    background-color: rgb(226, 98, 98);
+    color: white;
+    box-shadow: 0 0 4px rgba(239, 233, 233, 0.4);
+    margin: 2%;
+}
+
+
+
+h1 {
+    font-size: 45px;
+    background: linear-gradient(90deg, rgb(30, 28, 74) 22%, rgba(9, 9, 121, 1) 66%, rgba(2, 161, 221, 1) 100%, rgba(0, 212, 255, 1) 100%);
+    box-shadow: 0 0 5px rgba(106, 45, 227, 0.2);
+    text-decoration: underline;
+    text-align: center;
+    color: #fdfbfb;
+    padding: 15px;
+    border-radius: 10px;
+    font-family: Verdana, sans-serif;
+
+
+
+}
+
+.inputContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 20px auto;
+    flex-wrap: wrap;
+
+}
+
+.inputContent input[type="text"],
+.inputContent input[type="number"] {
+    width: 250px;
+    /* better than 30% */
+    max-width: 90%;
+    /* shrinks on mobile */
+
+}
+
+h2 {
+    font-size: 32px;
+    text-align: center;
+    color: #2c3e50;
+    text-decoration: underline;
+    padding-bottom: 5px;
+    margin-top: 25px;
+
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+}
+
+.modal-content {
+    background: rgb(248, 255, 210);
+
+    margin: 20px auto;
+    width: 90%;
+    max-width: 350px;
+    border: 2px solid rgb(255, 254, 255);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    /* THIS fixes close button alignment */
+
+    border-bottom: 1px solid #ccc;
+    background-color: rgb(218, 243, 78);
+}
+
+.modal-title {
+    padding: 10px;
+    color: rgb(137, 73, 73);
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.btn-close {
+    background: rgb(214, 108, 108);
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+
+}
+
+.btn-close:hover {
+    background: rgb(242, 79, 79);
+}
+
+
+
+
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 28px;
+        margin: 20px auto;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+        width: 100%;
+        margin: 10px;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    td button {
+        width: 100%;
+        margin: 6px;
+    }
+}
+
+@media (max-width: 768px) {
+    .inputContent {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .inputContent input,
+    .inputContent button {
+        width: 90%;
+    }
+}
+
+/* Search input styling (matching your existing input theme) */
+#search {
+  padding: 8px 11px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: 0.3s;
+  width: 250px;
+  max-width: 90%;
+}
+
+#search:hover {
+  border-color: #5f27cd;
+  box-shadow: 0 0 5px rgba(95, 39, 205, 0.3);
+}
+
+#search:focus {
+  border-color: #5f27cd;
+  box-shadow: 0 0 8px rgba(95, 39, 205, 0.5);
+}
+
+/* Search button styling (matching your Add Product button theme) */
+#searchBtn {
+  background-color: rgb(104, 131, 202); /* same as #add */
+  color: white;
+  border: 1px solid #f1f2f1;
+  border-radius: 8px;
+  padding: 8px 11px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#searchBtn:hover {
+  background-color: rgb(20, 60, 180); /* same hover as #add */
+  box-shadow: 0 4px 10px #f1f2f1;
+}

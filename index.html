@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LocalStorage Example</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+
+<body>
+  <div class="container">
+    <h1>Product List</h1>
+    <div class="inputContent">
+      <input type="text" id="productName" placeholder="Enter product name" />
+      <input type="number" id="productPrice" placeholder="Enter price" />
+      <button onclick="addProduct()" id="add">Add Product ╋</button>
+    </div>
+
+    <div class="inputContent">
+      <input type="text" id="search" placeholder="search" />
+      <button onclick="searchProduct()" id="searchBtn">Search 🔍</button>
+    </div>
+
+    <h2>Stored Products:</h2>
+
+
+    <table>
+      <thead>
+        <tr>
+          <th>Sl No</th>
+          <th>Product Name</th>
+          <th>Product Price</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="tbodydata"></tbody>
+    </table>
+
+    <!-- modal for viewdetails -->
+
+    <div class="modal" id="details">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="modal-title">View Details</div>
+            <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p id="detailName"></p>
+            <p id="detailPrice"></p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- modal for editdetails -->
+    <div class="modal" id="editDetails">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="modal-title">Edit Details</div>
+            <button type="button" id="btnEditclose" class="btn-close" data-bs-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="EditModal">
+              <label>Product Name</label>
+              <input type="text" class="form-control" placeholder="Enter Product Name" id="editName">
+            </div>
+
+            <div class="EditModal">
+              <label>Product Price</label>
+              <input type="number" class="form-control" placeholder="Enter Product Price" id="editPrice">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="EditModal">
+              <button type="button" id="btn-primary" class="btn btn-primary">Submit</button>
+              <button type="button" id="btn-danger" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const modal = document.getElementById("details");
+
+    const closeModal = document.getElementById("btn-close");
+    const closeEditModal = document.getElementById("btn-danger");
+    const crossEditModal = document.getElementById("btnEditclose");
+    const detailName = document.getElementById("detailName");
+    const detailPrice = document.getElementById("detailPrice");
+    const editModal = document.getElementById("editDetails");
+    const save = document.getElementById("btn-primary");
+
+    document.addEventListener("DOMContentLoaded", displayProducts);
+
+    window.onload = function () {
+      displayProducts();
+    };
+
+    function addProduct() {
+      let name = document.getElementById("productName").value;
+      let price = document.getElementById("productPrice").value;
+
+      if (!name || !price) {
+        alert("Please enter product name and price!");
+        return;
+      }
+
+      let products = JSON.parse(localStorage.getItem("products")) || [];
+
+      let newProduct = {
+        id: Date.now(),
+        name: name,
+        price: Number(price),
+      };
+      let exist = products.filter((item) => item.name == name);
+      if (exist.length > 0) {
+        alert("Duplicate value not accept");
+        form.reset();
+        return;
+      }
+
+      products.push(newProduct);
+      localStorage.setItem("products", JSON.stringify(products));
+
+      document.getElementById("productName").value = "";
+      document.getElementById("productPrice").value = "";
+
+      displayProducts();
+    }
+
+    function deleteProduct(productid) {
+      let products = JSON.parse(localStorage.getItem("products")) || [];
+      if (products.length === 0) {
+        alert("List is empty.")
+        return;
+      }
+
+      let updatedproduct = products.filter((item) => item.id !== productid)
+      localStorage.setItem("products", JSON.stringify(updatedproduct));
+      displayProducts();
+
+    }
+
+    function viewProduct(productid) {
+      let products = JSON.parse(localStorage.getItem("products")) || [];
+      const product = products.find(p => p.id === productid);
+      if (!product) return;
+      console.log(`Product- ${product}`);
+      detailName.textContent = `Name : ${product.name}`;
+      detailPrice.textContent = `Price : ${product.price}`;
+      modal.style.display = "block"
+    }
+
+    //close modal
+    closeModal.onclick = () => {
+      modal.style.display = "none"
+    }
+
+    // Close modal on outside click
+    window.onclick = (event) => {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+      if (event.target == editModal) {
+        editModal.style.display = "none";
+      }
+    }
+
+    let editIndex = null;
+    function editProduct(productid) {
+      let products = JSON.parse(localStorage.getItem("products")) || [];
+      let updatedproduct = products.find((item) => item.id === productid)
+      if(!updatedproduct){
+        return;
+      }
+      document.getElementById("editName").value = updatedproduct.name;
+      document.getElementById("editPrice").value = updatedproduct.price;
+      editIndex = productid;
+      editModal.style.display = "block";
+    }
+
+    closeEditModal.onclick = () => {
+      editModal.style.display = "none"
+    }
+
+
+
+    crossEditModal.onclick = () => {
+      editModal.style.display = "none"
+    }
+
+    save.onclick = () => {
+      let products = JSON.parse(localStorage.getItem("products"));
+      let index = products.findIndex(p => p.id === editIndex);
+      products[index].name = document.getElementById("editName").value;
+      products[index].price = document.getElementById("editPrice").value;
+      localStorage.setItem("products", JSON.stringify(products));
+
+      editModal.style.display = "none"
+      displayProducts();
+    }
+
+
+
+    function displayProducts(item) {
+
+      let table = document.querySelector("table");
+      let heading = document.querySelector("h2");
+
+      let productList = document.getElementById("tbodydata");
+      productList.innerHTML = "";
+
+      let products = item || JSON.parse(localStorage.getItem("products")) || [];
+
+
+      products.length > 0
+        ? (
+          table.style.display = "table",
+          heading.style.display = "block",
+          products.forEach((p, index) => {
+
+            let row = document.createElement("tr");
+            row.innerHTML = `
+        <td>${index + 1}.</td>
+        <td>${p.name}</td>
+        <td>${p.price}</td>
+        <td>
+          <button onclick="deleteProduct(${p.id})" id="delete">Delete 🗑</button>
+          <button onclick="viewProduct(${p.id})" id="view">View 👁</button>
+          <button onclick="editProduct(${p.id})" id="edit">Edit ✎</button>
+
+        </td> `;
+
+
+            productList.appendChild(row);
+          })
+        )
+        : (
+          productList.innerHTML = '<tr> <td colspan="4">No Data Found</td></tr>'
+        );
+    }
+
+    function searchProduct() {
+      let products = JSON.parse(localStorage.getItem("products")) || []
+      let search = document.getElementById("search").value.trim().toLowerCase()
+      let index;
+      if (search.length === 0) {
+        alert("Enter an item to be searched.")
+      }
+      if (products.length === 0) {
+        alert("No item in the list.")
+      }
+      let filterproducts = products.filter((item) => item.name.toLowerCase().includes(search));
+      if (filterproducts.length === 0) {
+        alert("Item not found");
+        return;
+      }
+
+      displayProducts(filterproducts)
+    }
+
+
+
+
+  </script>
+</body>
+
+</html>
